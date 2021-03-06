@@ -32,3 +32,28 @@ Route::get('student', function () {
     $student = Student::find(1);
     return $student;
 });
+
+Route::get('/insert', function () {
+    DB::insert("insert into Students(name,date_of_birth,GPA,advisor)values('Ayaulym','2002-04-18',4.0,'Zhangir')");
+});
+
+Route::get('/select', function () {
+    $results=DB::select('select * from students where id=?',[1]);
+    foreach($results as $students){
+        echo "name is: ".$students->name;
+        echo "<br>";
+        echo "date of birth: ".$students->date_of_birth;
+        echo "<br>";
+        echo "GPA is: ".$students->GPA;
+    }    
+});
+
+Route::get('/update', function () {
+    $updated=DB::update('update students set name="Naruto" where id=?',[1]);
+    return $updated;  
+});
+
+Route::get('/delete', function () {
+    $deleted=DB::delete(' delete from students where id=?',[1]);
+    return $deleted;  
+});
