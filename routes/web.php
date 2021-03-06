@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Student;
+use App\Post;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,9 +34,11 @@ Route::get('student', function () {
     return $student;
 });
 
-Route::get('/insert', function () {
-    DB::insert("insert into Students(name,date_of_birth,GPA,advisor)values('Ayaulym','2002-04-18',4.0,'Zhangir')");
+Route::get('/add', function () {
+    DB::insert("insert into Students(name,date_of_birth,GPA,advisor)values('Ayaulym5','2002-04-18',4.0,'Zhangir')");
 });
+
+
 
 Route::get('/select', function () {
     $results=DB::select('select * from students where id=?',[1]);
@@ -56,4 +59,50 @@ Route::get('/update', function () {
 Route::get('/delete', function () {
     $deleted=DB::delete(' delete from students where id=?',[1]);
     return $deleted;  
+});
+
+/*Route::get('/read', function () {
+    $students=Student::all();
+    foreach($students as $student){
+        echo $student->name;
+        echo "<br>";
+    } 
+});*/
+
+/*Route::get('/find', function () {
+    $students=Student::find(2);
+    return $students->name;
+});*/
+
+/*Route::get('/find', function () {
+    $students=Student::where('id',2)->first();
+    return $students;
+});*/
+
+Route::get('/select2', function () {
+    $students=Student::where('id',1)->value('name');
+    return $students;
+});
+
+Route::get('/add2', function () {
+    $student=new Student;
+    $student->name='Midoria';
+    $student->date_of_birth='2001-03-14';
+    $student->GPA=3.9;
+    $student->advisor='Aizawa';
+    $student->save();
+});
+
+Route::get('/update2', function () {
+    $student=Student::find(2);
+    $student->name='Todoroki';
+    $student->date_of_birth='2001-07-09';
+    $student->GPA=4.0;
+    $student->advisor='Aizawa';
+    $student->save();
+});
+
+Route::get('/delete2',function(){
+    $student=Student::find(1);
+    $student->delete();
 });
